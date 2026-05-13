@@ -77,6 +77,12 @@ obsidian vault=MyObsidian move file="笔记名" to="目标目录/笔记名.md"
 4. 用 `obsidian create ... silent` 创建。
 5. 在 Daily 追加 log，包含新笔记 wikilink 和一句话上下文。
 
+**存储位置规则**：
+- 原始内容（文章剪藏、网页抓取）→ `10_AgentClips/`
+- 领域剖析/知识整理 → `<领域目录>/_AgentSpace/`
+- 用户明确要求放在父目录的整理笔记 → `<领域目录>/`（需用户确认）
+- 简单想法、待办、一句话记录 → 只追加 Daily，不创建独立笔记
+
 Frontmatter 模板以 `AGENTS.md` 为准，通常形态如下：
 
 ```yaml
@@ -89,15 +95,14 @@ confidence:
 created_at: YYYY-MM-DDTHH:mm:ss
 updated_at: YYYY-MM-DDTHH:mm:ss
 refs: []
+source: ai-generated
+managed-by: agent
 ---
 ```
 
-`_AgentSpace/` 笔记额外添加：
-
-```yaml
-source: ai-generated
-managed-by: agent
-```
+**字段说明**：
+- `source: ai-generated` — 标识内容由 AI 生成
+- `managed-by: agent` — 标识由 Agent 自主管理，可在 `_AgentSpace/` 内自由增删改
 
 ### Update
 
@@ -120,21 +125,22 @@ managed-by: agent
 
 Daily 是用户阅读和回溯知识库的入口。任何新保存、创建或沉淀到 vault 的内容，都要在当天 Daily 留下 log。
 
-Daily log 的最低要求：
+### Daily log 的最低要求
 
-- 说明新增了什么内容。
-- 链接到对应笔记；简单记录没有独立笔记时，记录正文就是 log。
-- 用一句话说明保存原因或核心上下文。
+- 说明新增了什么内容
+- 链接到对应笔记；简单记录没有独立笔记时，记录正文就是 log
+- 用一句话说明保存原因或核心上下文
 
-常用格式：
+### 格式选择
 
+**简单记录**（一句话、想法、待办）：
 ```markdown
 - 简短记录或待办
 - 新增 [[00_Inbox/标题|标题]]：一句话上下文
 - 更新 [[领域目录/_AgentSpace/知识标题|知识标题]]：一句话说明
 ```
 
-资料沉淀使用 Knowledge Capture 中的二级标题块格式。
+**资料沉淀**（文章、报告、深度分析）：使用 Knowledge Capture 中的二级标题块格式（包含"核心要旨""剪切原文""完整领域剖析"）
 
 ## Knowledge Capture
 
@@ -156,33 +162,48 @@ Daily log 的最低要求：
 - 干净 Markdown 正文写入 `10_AgentClips/`；如果不可用，则保存可用正文、URL 和提取失败说明。
 - 分析内容写入对应领域 `_AgentSpace/`。
 - 领域目录由本技能按 `AGENTS.md` 判断；用户明确指定时优先。
-- 保存粒度由用户意图决定；无法判断时按“简单记录”和“资料沉淀”的边界选择。
+- 保存粒度由用户意图决定；无法判断时按”简单记录”和”资料沉淀”的边界选择
 
-简单记录：
+### 简单记录
+
+只追加到 Daily，不创建独立笔记：
 
 ```bash
-obsidian vault=MyObsidian daily:append content="<简短记录>"
+obsidian vault=MyObsidian daily:append content=”- <简短记录内容>”
+```
+
+示例：
+```markdown
+- 想法：应该重新考虑项目的技术方案
+- 待办：周三前完成 SEA 财报分析
+- 记录：用户提到需要关注 Q3 的电商数据
 ```
 
 资料沉淀：
 
 1. **原始内容**：保存到 `10_AgentClips/`，尽量保留原文、来源 URL、抓取时间和必要上下文。
-2. **每日记录**：在 Daily 中追加一个二级标题块，聚合“文章核心要旨、剪切原文 wikilink、完整领域剖析 wikilink”。
+2. **每日记录**：在 Daily 中追加一个二级标题块，聚合”文章核心要旨、剪切原文 wikilink、完整领域剖析 wikilink”。
 3. **领域剖析**：将完整分析写入对应领域的 `_AgentSpace/`，正文必须链接回 `10_AgentClips/` 原文。
+
+**存储位置确认**：
+- 领域剖析笔记**必须**放入 `_AgentSpace/` 子目录，不是父目录
+- 只有用户明确要求时，才将整理后的笔记放在领域根目录
 
 完整资料沉淀时，三者必须互相关联：
 
-- `10_AgentClips/` 原始笔记的 `refs` 记录外部来源；正文可链接到领域剖析笔记。
-- Daily 二级标题块同时包含原文 wikilink 和领域剖析 wikilink，后续阅读时可从这里跳转。
-- `_AgentSpace/` 领域剖析笔记的 `refs` 指向 `10_AgentClips/` 原始笔记，正文开头链接原文，并可链接相关领域笔记。
+- `10_AgentClips/` 原始笔记的 `refs` 记录外部来源；正文**结尾必须添加**链接到领域剖析笔记的”## 领域剖析”章节
+- Daily 二级标题块同时包含原文 wikilink 和领域剖析 wikilink，后续阅读时可从这里跳转
+- `_AgentSpace/` 领域剖析笔记的 `refs` 指向 `10_AgentClips/` 原始笔记，正文开头链接原文，并可链接相关领域笔记
 
-Daily 追加内容格式：
+Daily 追加内容格式（资料沉淀完整版）：
 
 ```markdown
 ## 文章标题
 
 ### 核心要旨
-用 2-4 条要点记录文章或资料的核心判断。
+- 要点 1：关键判断或数据
+- 要点 2：重要结论
+- 要点 3：行动建议或关注点
 
 ### 剪切原文
 - [[10_AgentClips/标题|标题]]
@@ -191,16 +212,38 @@ Daily 追加内容格式：
 - [[<领域目录>/_AgentSpace/知识标题|知识标题]]
 ```
 
+Daily 追加内容格式（仅保存原文）：
+
+```markdown
+## 文章标题
+
+### 核心要旨
+- 要点 1：关键判断
+- 要点 2：重要结论
+
+### 剪切原文
+- [[10_AgentClips/标题|标题]]
+```
+
 CLI 操作顺序：
 
 ```bash
-obsidian vault=MyObsidian create path="10_AgentClips/标题.md" content="<原始内容笔记>" silent
-obsidian vault=MyObsidian create path="<领域目录>/_AgentSpace/知识标题.md" content="<分析知识笔记>" silent
-obsidian vault=MyObsidian daily:append content="<Daily 二级标题块>"
-obsidian vault=MyObsidian append path="10_AgentClips/标题.md" content="\n\n## 领域剖析\n- [[<领域目录>/_AgentSpace/知识标题|知识标题]]"
+# 1. 创建原始内容笔记
+obsidian vault=MyObsidian create path=”10_AgentClips/标题.md” content=”<原始内容笔记>” silent
+
+# 2. 创建领域剖析笔记（放入 _AgentSpace/）
+obsidian vault=MyObsidian create path=”<领域目录>/_AgentSpace/知识标题.md” content=”<分析知识笔记>” silent
+
+# 3. 在 Daily 追加二级标题块
+obsidian vault=MyObsidian daily:append content=”<Daily 二级标题块>”
+
+# 4. 在原始笔记追加领域剖析链接（必须在创建领域剖析之后）
+obsidian vault=MyObsidian append path=”10_AgentClips/标题.md” content=”\n\n## 领域剖析\n- [[<领域目录>/_AgentSpace/知识标题|知识标题]]”
 ```
 
-如果用户只要求保存原文，不强制生成领域剖析笔记；此时 Daily 二级标题块保留“核心要旨”和“剪切原文”，省略“完整领域剖析”。
+**关键顺序**：先创建领域剖析笔记，再追加链接到原始笔记，确保链接目标已存在。
+
+如果用户只要求保存原文，不强制生成领域剖析笔记；此时 Daily 二级标题块保留”核心要旨”和”剪切原文”，省略”完整领域剖析”。
 
 ## Delegation
 
