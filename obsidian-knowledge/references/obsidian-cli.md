@@ -5,26 +5,30 @@ description: Interact with Obsidian vaults using the Obsidian CLI to read, creat
 
 # Obsidian CLI
 
-Use the `obsidian` CLI to interact with a running Obsidian instance. Requires Obsidian to be open.
+Use the `obsidian` CLI to interact with `MyObsidian`. Requires Obsidian to be available in the current execution environment.
 
-**IMPORTANT**:before running `obsidian create`, read `obsidian vault="MyObsidian" read file="AGENTS"` and follow the rules in it.
+Before creating or modifying notes, read the vault policy and follow it:
+
+```bash
+obsidian vault=MyObsidian read file="AGENTS"
+```
 
 ## Command reference
 
-Run `obsidian help` to see all available commands. This is always up to date. Full docs: <https://help.obsidian.md/cli>
+Run `obsidian help` to see the available commands in the installed CLI.
 
 ## Syntax
 
 **Parameters** take a value with `=`. Quote values with spaces:
 
 ```bash
-obsidian create name="My Note" content="Hello world"
+obsidian vault=MyObsidian create name="My Note" content="Hello world"
 ```
 
 **Flags** are boolean switches with no value:
 
 ```bash
-obsidian create name="My Note" silent overwrite
+obsidian vault=MyObsidian create name="My Note" silent overwrite
 ```
 
 For multiline content use `\n` for newline and `\t` for tab.
@@ -41,23 +45,23 @@ Many commands accept `file` or `path` to target a file. Without either, the acti
 Commands target the most recently focused vault by default. Use `vault=<name>` as the first parameter to target a specific vault:
 
 ```bash
-obsidian vault="My Vault" search query="test"
+obsidian vault=MyObsidian search query="test"
 ```
 
 ## Browsing vault structure
 
 ```bash
 # List files in a folder
-obsidian vault=MyObsidian files folder="31_WebClips"
+obsidian vault=MyObsidian files folder="00_Inbox"
 
 # List files with extension filter
-obsidian vault=MyObsidian files folder="20_Projects" ext=canvas
+obsidian vault=MyObsidian files folder="03_Projects" ext=canvas
 
 # Count files in a folder
 obsidian vault=MyObsidian files folder="01_Daily" total
 
 # List subfolders
-obsidian vault=MyObsidian folders folder="10_Area"
+obsidian vault=MyObsidian folders folder="15_Tech"
 ```
 
 ## Search commands
@@ -98,7 +102,7 @@ obsidian vault=MyObsidian search query="关键词"
 obsidian vault=MyObsidian search query="关键词 path:_AgentSpace"
 
 # Exclude a subdirectory
-obsidian vault=MyObsidian search query="path:31_WebClips -path:_Archive"
+obsidian vault=MyObsidian search query="path:10_AgentClips -path:_Archive"
 
 # Search by tag
 obsidian vault=MyObsidian search query="tag:#Clippings"
@@ -127,16 +131,16 @@ obsidian vault=MyObsidian move file="My Note" to="Archive/My Note.md"
 ## Common patterns
 
 ```bash
-obsidian read file="My Note"
-obsidian create name="New Note" content="# Hello" template="Template" silent
-obsidian append file="My Note" content="New line"
-obsidian search query="search term" limit=10
-obsidian daily:read
-obsidian daily:append content="- [ ] New task"
-obsidian property:set name="status" value="done" file="My Note"
-obsidian tasks daily todo
-obsidian tags sort=count counts
-obsidian backlinks file="My Note"
+obsidian vault=MyObsidian read file="My Note"
+obsidian vault=MyObsidian create path="00_Inbox/New Note.md" content="# Hello" silent
+obsidian vault=MyObsidian append file="My Note" content="New line"
+obsidian vault=MyObsidian search query="search term" limit=10
+obsidian vault=MyObsidian daily:read
+obsidian vault=MyObsidian daily:append content="- [ ] New task"
+obsidian vault=MyObsidian property:set name="status" value="done" file="My Note"
+obsidian vault=MyObsidian tasks daily todo
+obsidian vault=MyObsidian tags sort=count counts
+obsidian vault=MyObsidian backlinks file="My Note"
 ```
 
 Use `--copy` on any command to copy output to clipboard. Use `silent` to prevent files from opening. Use `total` on list commands to get a count.
