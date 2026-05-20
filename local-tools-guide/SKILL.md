@@ -36,6 +36,8 @@ description: 当用户需要执行本地命令、安装或使用 CLI 工具、�
 | 盘点当前机器可用工具 | 使用本地工具盘点流程 |
 | 转换本地文档、Office/PDF/网页内容转 Markdown | 使用文档转换流程 |
 | 搜索、查找、调研、查最新信息、找资料 | 使用搜索发现流程 |
+| 目标站点或应用已有 OpenCLI adapter、用户要求"把网站当 CLI 用"、需要结构化站点命令 | 转交 OpenCLI 专用 skill/工具，先确认 adapter 和命令 schema |
+| 用户明确要求 Agent Reach、需要全网可达性视野、平台 API 输出整理或 agent-reach 健康检查 | 转交 Agent Reach 专用 skill/工具，本指南只做路由 |
 | 查询编程库、框架、API、SDK、错误信息 | 优先使用技术文档流程 |
 | 只提供 URL，或要求提取、抓取、转 Markdown | 使用正文提取流程 |
 | 候选链接核验、确认标题/时间/关键事实 | 使用链接核验流程 |
@@ -54,6 +56,8 @@ description: 当用户需要执行本地命令、安装或使用 CLI 工具、�
 | 本地工具盘点 | `which -a` -> `uv tool list` -> `bun pm ls -g` -> `brew list` -> PATH 目录盘点 | `references/local-inventory.md` |
 | 文档转换 | `markitdown` -> 文件类型专用工具 -> OOXML/XML/PDF fallback | `references/document-tools.md` |
 | 搜索发现 | `web_search` -> `ddgs` -> `browser-use` 搜索页 | `references/search-tools.md` |
+| 站点/应用结构化操作 | OpenCLI 专用 skill/工具 -> `opencli list` / `opencli <site> --help -f yaml` | `references/local-inventory.md` |
+| 全网可达性/平台视野 | Agent Reach 专用 skill/工具 -> `agent-reach doctor` / `agent-reach watch` | `references/local-inventory.md` |
 | 候选链接核验 | `web_fetch` -> `browser-use` | `references/search-tools.md` |
 | 正文提取 | `web_fetch` -> `browser-use open <URL>` -> `state/eval` | `references/fetch-tools.md` |
 | 页面交互/高级控制 | `browser-use open <URL>` -> `state` -> `click/input/eval/screenshot` -> `--session` / `python` | `references/browser-use.md` |
@@ -70,6 +74,7 @@ description: 当用户需要执行本地命令、安装或使用 CLI 工具、�
 - 非 `uv` / `bun` / `brew` 来源的已有 CLI 可以使用，但只能按现有入口调用，不负责安装、升级或迁移。
 - 本地文档先用可复现转换工具，不要手工复制粘贴内容作为提取结果。
 - 信息发现先搜索，不用 `web_fetch` 代替搜索。
+- 如果用户意图命中已配置的 OpenCLI 或 Agent Reach 专用 skill，优先转交对应 skill；本指南只负责识别意图和确认本地入口，不复制其具体操作说明。
 - 已有 URL 先核验或提取，不重新搜索，除非用户要求找更多来源。
 - 需要登录态、点击、截图、动态加载或真实页面状态时，用 `browser-use`。
 - 编程库/API 文档先走 `ctx7`，找不到再用定向网页搜索。

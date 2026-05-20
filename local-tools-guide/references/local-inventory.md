@@ -30,6 +30,7 @@ zsh -lc 'which -a <tool>'
 
 | 包/工具 | 可调用命令 | Agent 用途 |
 | --- | --- | --- |
+| `agent-reach` | `agent-reach` | 全网可达性视野、平台 API 输出整理和健康检查；优先交给 Agent Reach 专用 skill |
 | `browser-use` | `browser-use` | 真实浏览器交互；需要登录态时先确认可用 profile |
 | `ddgs` | `ddgs` | 命令行网页/新闻搜索 fallback |
 | `httpx` | `httpx` | HTTP 请求调试 |
@@ -49,7 +50,7 @@ zsh -lc 'which -a <tool>'
 | `playwright` | `playwright` | 浏览器测试和自动化 |
 | `@playwright/mcp` | `playwright-mcp` | Playwright MCP，按需使用 |
 | `agent-browser` | `agent-browser` | browser/agent 辅助任务，按需使用 |
-| `@jackwener/opencli` | `opencli` | OpenCLI 相关任务，按需使用 |
+| `@jackwener/opencli` | `opencli` | 站点/应用 adapter、把网站当 CLI 调用；优先交给 OpenCLI 专用 skill |
 | `@mariozechner/pi-coding-agent` | `pi` | 编码 agent，按需使用 |
 | `opencode-ai` | `opencode` | 编码 agent，按需使用 |
 | `@openai/codex` | `codex` | 只有用户明确要求调用 Codex CLI 时使用 |
