@@ -9,9 +9,8 @@ paths:
 
 ## 快速参考
 
-- **格式化代码**: `ruff format .`
-- **检查并自动修复**: `ruff check --fix .`
-- **类型检查**: `ty check`
+- **格式化检查**: `ruff check --fix`
+- **类型检查**: `ty check --fix`
 
 ---
 
@@ -172,4 +171,4 @@ ruff 和 ty 会自动捕获大多数问题，手动关注：
 
 ---
 
-提交前运行 `ruff format . && ruff check --fix . && ty check` 确保合规。
+提交前运行 `ruff check --fix && ty check --fix` 确保合规。
