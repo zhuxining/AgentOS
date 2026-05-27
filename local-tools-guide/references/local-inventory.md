@@ -37,9 +37,7 @@ zsh -lc 'which -a <tool>'
 | `litert-lm` | `litert-lm` | 本地 LLM 实验，按需使用 |
 | `markitdown` | `markitdown` | 本地 Office/PDF/HTML 转 Markdown |
 | `nanobot-ai` | `nanobot` | agent/LLM 工作流实验，按需使用 |
-| `ruff` | `ruff` | Python lint/format |
 | `stk-cli` | `stk` | 项目或用户明确要求时使用 |
-| `ty` | `ty` | Python 类型检查 |
 
 ## bun global 可用工具
 
@@ -49,7 +47,6 @@ zsh -lc 'which -a <tool>'
 | `defuddle-cli` | `defuddle` | HTML 转化为 Markdown；不作为 URL 正文提取 fallback |
 | `playwright` | `playwright` | 浏览器测试和自动化 |
 | `@playwright/mcp` | `playwright-mcp` | Playwright MCP，按需使用 |
-| `agent-browser` | `agent-browser` | browser/agent 辅助任务，按需使用 |
 | `@jackwener/opencli` | `opencli` | 站点/应用 adapter、把网站当 CLI 调用；优先交给 OpenCLI 专用 skill |
 | `@mariozechner/pi-coding-agent` | `pi` | 编码 agent，按需使用 |
 | `opencode-ai` | `opencode` | 编码 agent，按需使用 |
